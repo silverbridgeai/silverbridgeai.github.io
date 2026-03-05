@@ -2,22 +2,91 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SilverBridge AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Roboto&display=swap" rel="stylesheet">
 <style>
-body{margin:0;font-family:Arial;background:#0b0f1a;color:white;text-align:center;}
-.container{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);}
-h1{font-size:60px;letter-spacing:2px;margin-bottom:20px;color:#66ccff;text-shadow:0 0 10px #66ccff,0 0 20px #66ccff,0 0 40px #66ccff;}
-p{font-size:22px;color:#cccccc;}
-.footer{position:absolute;bottom:20px;width:100%;font-size:14px;color:#777;}
+  body, html {margin:0;padding:0;width:100%;height:100%;overflow:hidden;font-family: 'Roboto', sans-serif;}
+  #bgCanvas {position:absolute;top:0;left:0;width:100%;height:100%;z-index:-1;background:#0b0f1a;}
+  .content {position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;color:white;}
+  h1 {font-family: 'Orbitron', sans-serif;font-size:64px;color:#66ccff;text-shadow:0 0 10px #66ccff,0 0 20px #66ccff;}
+  p {font-size:20px;color:#cccccc;margin:10px 0;}
+  .footer {position:absolute;bottom:20px;width:100%;text-align:center;color:#777;font-size:14px;}
+  .btn {display:inline-block;margin:10px;padding:10px 20px;border:1px solid #66ccff;color:#66ccff;text-decoration:none;border-radius:5px;transition:0.3s;}
+  .btn:hover {background:#66ccff;color:#0b0f1a;}
+  .social-icons a {margin:0 10px;color:#66ccff;text-decoration:none;font-size:24px;transition:0.3s;}
+  .social-icons a:hover {color:#ffffff;}
 </style>
 </head>
 <body>
-<div class="container">
-<h1>SilverBridge AI</h1>
-<p>Our website is currently under construction.</p>
-<p>Exciting AI-driven innovations coming soon.</p>
-<p>Stay tuned.</p>
+<canvas id="bgCanvas"></canvas>
+<div class="content">
+  <h1>SilverBridge AI</h1>
+  <p>AI-driven interdisciplinary science and technology innovation</p>
+  <p>Our website is under construction. Exciting solutions coming soon!</p>
+  <a href="mailto:info@silverbridgeai.co.uk" class="btn">Contact Us</a>
+  <div class="social-icons">
+    <a href="https://www.linkedin.com/company/silverbridgeai" target="_blank">LinkedIn</a>
+  </div>
 </div>
 <div class="footer">© 2026 SilverBridge AI Ltd. All rights reserved.</div>
+
+<script>
+const canvas = document.getElementById('bgCanvas');
+const ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let particlesArray;
+const colors = ['#66ccff','#3399ff','#33ffff','#ccf2ff'];
+
+class Particle {
+  constructor(x,y,size,color,velocityX,velocityY){
+    this.x=x; this.y=y; this.size=size; this.color=color;
+    this.velocityX=velocityX; this.velocityY=velocityY;
+  }
+  draw(){
+    ctx.beginPath();
+    ctx.arc(this.x,this.y,this.size,0,Math.PI*2);
+    ctx.fillStyle=this.color;
+    ctx.fill();
+  }
+  update(){
+    this.x += this.velocityX;
+    this.y += this.velocityY;
+    if(this.x>canvas.width || this.x<0) this.velocityX*=-1;
+    if(this.y>canvas.height || this.y<0) this.velocityY*=-1;
+    this.draw();
+  }
+}
+
+function initParticles(){
+  particlesArray=[];
+  for(let i=0;i<150;i++){
+    const size=Math.random()*3+1;
+    const x=Math.random()*canvas.width;
+    const y=Math.random()*canvas.height;
+    const color=colors[Math.floor(Math.random()*colors.length)];
+    const velocityX=(Math.random()-0.5)*0.5;
+    const velocityY=(Math.random()-0.5)*0.5;
+    particlesArray.push(new Particle(x,y,size,color,velocityX,velocityY));
+  }
+}
+
+function animate(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  particlesArray.forEach(p=>p.update());
+  requestAnimationFrame(animate);
+}
+
+window.addEventListener('resize',()=>{
+  canvas.width=window.innerWidth;
+  canvas.height=window.innerHeight;
+  initParticles();
+});
+
+initParticles();
+animate();
+</script>
 </body>
 </html>
