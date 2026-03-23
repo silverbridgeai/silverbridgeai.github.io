@@ -1,91 +1,93 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EyePay: Multi-Modal AI Iris & Facial Recognition Payment Technology</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin:0; padding:0; line-height:1.6; color:#333; }
-        header { background:#004080; color:white; padding:40px 20px; text-align:center; }
-        header h1 { margin:0; font-size:2em; }
-        header p { font-size:1.2em; margin-top:10px; }
-        section { padding:40px 20px; max-width:1000px; margin:auto; }
-        h2 { color:#004080; }
-        .features, .use-cases, .commercial { margin-top:20px; }
-        ul { margin-left:20px; }
-        .achievements { display:flex; flex-wrap:wrap; gap:20px; margin-top:20px; }
-        .achievement { flex:1 1 45%; text-align:center; }
-        .achievement img { width:100%; max-width:400px; height:auto; border-radius:8px; }
-        .video { text-align:center; margin-top:30px; }
-        iframe { width:100%; max-width:800px; height:450px; border:0; border-radius:8px; }
-        .cta { text-align:center; margin-top:40px; }
-        .cta a { background:#004080; color:white; padding:15px 25px; text-decoration:none; border-radius:5px; font-weight:bold; }
-        .cta a:hover { background:#0066cc; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SilverBridge AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Roboto&display=swap" rel="stylesheet">
+<style>
+body, html {margin:0;padding:0;width:100%;height:100%;overflow:hidden;font-family: 'Roboto', sans-serif;}
+#bgCanvas {position:absolute;top:0;left:0;width:100%;height:100%;z-index:-1;background:#0b0f1a;}
+.content {position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;color:white;}
+h1 {font-family: 'Orbitron', sans-serif;font-size:64px;color:#66ccff;text-shadow:0 0 10px #66ccff,0 0 20px #66ccff;}
+p {font-size:20px;color:#cccccc;margin:10px 0;}
+.footer {position:absolute;bottom:20px;width:100%;text-align:center;color:#777;font-size:14px;}
+.btn {display:inline-block;margin:10px;padding:10px 20px;border:1px solid #66ccff;color:#66ccff;text-decoration:none;border-radius:5px;transition:0.3s;}
+.btn:hover {background:#66ccff;color:#0b0f1a;}
+.social-icons a {margin:0 10px;color:#66ccff;text-decoration:none;font-size:24px;transition:0.3s;}
+.social-icons a:hover {color:#ffffff;}
+</style>
 </head>
 <body>
+<canvas id="bgCanvas"></canvas>
+<div class="content">
+<h1>SilverBridge AI</h1>
+<p>AI-driven interdisciplinary science and technology innovation</p>
+<p>Our website is under construction. Exciting solutions coming soon!</p>
+<a href="mailto:info@silverbridgeai.co.uk" class="btn">Contact Us</a>
+<div class="social-icons">
+<a href="https://www.linkedin.com/company/silverbridgeai" target="_blank">LinkedIn</a>
+</div>
+</div>
+<div class="footer">© 2026 SilverBridge AI Ltd. All rights reserved.</div>
+<div class="footer">© 2026 SilverBridge UK Ltd. All rights reserved.</div>
 
-<header>
-    <h1>EyePay</h1>
-    <p>Multi-Modal AI Iris & Facial Recognition Payment Technology for Smartphones, Tablets, and Laptops</p>
-</header>
+<script>
+const canvas = document.getElementById('bgCanvas');
+const ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
 
-<section>
-    <h2>Key Features</h2>
-    <div class="features">
-        <ul>
-            <li>2-in-1 Iris & Facial Recognition Sensor for Mobile Devices</li>
-            <li>Seamless integration with existing payment channels</li>
-            <li>Micro-scale terminal design for universal deployment</li>
-            <li>High-security AI-powered biometric authentication</li>
-        </ul>
-    </div>
-</section>
+let particlesArray;
+const colors = ['#66ccff','#3399ff','#33ffff','#ccf2ff'];
 
-<section>
-    <h2>Achievements & Recognition</h2>
-    <div class="achievements">
-        <div class="achievement">
-            <img src="1.jpg" alt="EyePay at CES & Intel Developer Forum">
-            <p>EyePay technology launched at CES and Intel Developer Forum (IDF), alongside Intel CEO Brian Krzanich and SEVP Kirk Skaugen.</p>
-        </div>
-        <div class="achievement">
-            <img src="2.jpg" alt="EyeSQuare launch at Lenovo TechWorld">
-            <p>Invited by Lenovo to unveil the world’s first miniaturized iris recognition terminal, EyeSQuare, at TechWorld USA.</p>
-        </div>
-    </div>
-</section>
+class Particle {
+constructor(x,y,size,color,velocityX,velocityY){
+this.x=x; this.y=y; this.size=size; this.color=color;
+this.velocityX=velocityX; this.velocityY=velocityY;
+}
+draw(){
+ctx.beginPath();
+ctx.arc(this.x,this.y,this.size,0,Math.PI*2);
+ctx.fillStyle=this.color;
+ctx.fill();
+}
+update(){
+this.x += this.velocityX;
+this.y += this.velocityY;
+if(this.x>canvas.width || this.x<0) this.velocityX*=-1;
+if(this.y>canvas.height || this.y<0) this.velocityY*=-1;
+this.draw();
+}
+}
 
-<section class="video">
-    <h2>Launch Video</h2>
-    <iframe src="https://www.youtube.com/embed/Da_A1yZBFTc" allowfullscreen></iframe>
-</section>
+function initParticles(){
+particlesArray=[];
+for(let i=0;i<150;i++){
+const size=Math.random()*3+1;
+const x=Math.random()*canvas.width;
+const y=Math.random()*canvas.height;
+const color=colors[Math.floor(Math.random()*colors.length)];
+const velocityX=(Math.random()-0.5)*0.5;
+const velocityY=(Math.random()-0.5)*0.5;
+particlesArray.push(new Particle(x,y,size,color,velocityX,velocityY));
+}
+}
 
-<section>
-    <h2>Use Cases</h2>
-    <div class="use-cases">
-        <ul>
-            <li>Mobile Payments on smartphones, tablets, and laptops</li>
-            <li>Secure access control for UK-based enterprises</li>
-            <li>Integration with financial services and retail payment channels</li>
-        </ul>
-    </div>
-</section>
+function animate(){
+ctx.clearRect(0,0,canvas.width,canvas.height);
+particlesArray.forEach(p=>p.update());
+requestAnimationFrame(animate);
+}
 
-<section>
-    <h2>Commercial Impact</h2>
-    <div class="commercial">
-        <ul>
-            <li>High-speed and secure payment processing</li>
-            <li>Reduced fraud and identity theft</li>
-            <li>Scalable for global deployment, including UK financial ecosystem</li>
-        </ul>
-    </div>
-</section>
+window.addEventListener('resize',()=>{
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+initParticles();
+});
 
-<section class="cta">
-    <a href="mailto:info@silverbridgeai.co.uk">Contact us for UK pilot projects</a>
-</section>
-
+initParticles();
+animate();
+</script>
 </body>
 </html>
